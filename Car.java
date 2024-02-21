@@ -38,7 +38,7 @@ public class Car {
     }
 
     private void move() {
-        if (position + getMovement() >= roadLength || position + getMovement() <= 0) // zero index
+        if (position + getMovement() >= roadLength || position + getMovement() < 0) // zero index
             increasingPos = !increasingPos; // makes car switch direction if it hits the end of the road
 
         position += getMovement();
