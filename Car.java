@@ -38,8 +38,11 @@ public class Car {
     }
 
     private void move() {
-        position += increasePosToInt();
-        
+        if (position + getMovement() >= roadLength || position + getMovement() <= 0) // zero index
+            increasingPos = !increasingPos; // makes car switch direction if it hits the end of the road
+
+        position += getMovement();
+
         attemptToDropOffPassengers();
         attemptToPickUpPassengers();
     }
@@ -68,7 +71,7 @@ public class Car {
         revenue += passengers.size();
     }
 
-    private int increasePosToInt() {
+    private int getMovement() {
         return increasingPos ? 1 : -1;
     }
 
