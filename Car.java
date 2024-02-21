@@ -136,16 +136,16 @@ public class Car {
         String str = "Car " + uniqueId + ": revenue - " + revenue + " | direction: (" + increasingPosToDirectionString() + ") | destination: " + destinationStation + " | passengers: ";
 
         if (passengers.size() > 0)
-            str += " (";
+            str += " {";
 
         for (Passenger passenger : passengers) {
-            str += passenger + " | ";
+            str += passenger;
         }
 
         if (passengers.size() == 0)
-            str += " None | ";
+            str += " None ";
         else
-            str += ") ";
+            str += "} ";
 
         return str;
     }
