@@ -38,7 +38,7 @@ public class Passenger {
     }
 
     private void changeDestinationStation(int newPos) {
-        position = newPos;
+        destinationStation = newPos;
 
         if (position == destinationStation) 
             getNewDestination();
