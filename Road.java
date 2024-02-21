@@ -30,6 +30,14 @@ public class Road {
         }
     }
 
+    public void passengerPickedUp(Passenger passenger) {
+        passengers.remove(passenger);
+    }
+
+    public void passengerDroppedOff(Passenger passenger) {
+        passengers.add(passenger);
+    }
+
     private void constructCars() {
         for (int i = 0; i < carCount; i++) {
             Car car = new Car(this);

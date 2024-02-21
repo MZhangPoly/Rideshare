@@ -51,6 +51,8 @@ public class Car {
         for (int i = 0; i < passengers.size(); i++) {
             if (passengers.get(i).getDestinationStation() == position) {
                 passengers.remove(i).exitCar();
+                
+                road.passengerDroppedOff(passengers.get(i));
             }
         }
     }
@@ -62,6 +64,8 @@ public class Car {
                     passengers.add(passenger);
 
                     passenger.enterCar(this);
+
+                    road.passengerPickedUp(passenger);
                 } 
             }
         }
