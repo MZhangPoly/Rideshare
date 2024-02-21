@@ -138,7 +138,7 @@ public class Car {
         if (passengers.size() == 0)
             str += " None | ";
         else
-            str += "]"
+            str += "]";
 
         return str;
     }
