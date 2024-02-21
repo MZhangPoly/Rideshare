@@ -1,25 +1,71 @@
+import java.util.ArrayList;
+
 public class Car {
+    private Road road;
+
     private int revenue;
+
+    private int roadLength;
 
     private int position;
     private int destinationStation;
     private boolean increasingPos;
 
-    private int roadLength;
+    private ArrayList<Passenger> passengers;
+    private int maxPassengers;
+    
+    public Car(Road road) {
+        this.road = road;
 
-    public Car(int stationCount) {
         revenue = 0;
 
-        changePosition((int) (Math.random() * stationCount));
-        changeDestinationStation((int) (Math.random() * stationCount));
+        roadLength = road.getLength();
+
+        changePosition((int) (Math.random() * roadLength));
+        changeDestinationStation((int) (Math.random() * roadLength));
         
         alignIncreasingPosVal();
 
-        roadLength = stationCount;
+        passengers = new ArrayList<Passenger>();
+        maxPassengers = 3;
+
+        attemptToPickUpPassengers();
     }
 
-    public void move() {
+    public void onTick() {
+        addRevenueForTick();
+        move();
+    }
+
+    private void move() {
         position += increasePosToInt();
+        
+        attemptToDropOffPassengers();
+        attemptToPickUpPassengers();
+    }
+
+    private void attemptToDropOffPassengers() {
+        for (int i = 0; i < passengers.size(); i++) {
+            if (passengers.get(i).getDestinationStation() == position) {
+                passengers.remove(i).exitCar();
+            }
+        }
+    }
+
+    private void attemptToPickUpPassengers() {
+        for (Passenger passenger : road.getPassengers()) {
+            if (passenger.getPosition() == position && (getIncreaseNeededToReachDestination(passenger.getDestinationStation()) == increasingPos)) {
+                if (passengers.size() < maxPassengers) {
+                    passengers.add(passenger);
+
+                    passenger.enterCar(this);
+                } 
+            }
+        }
+    }
+
+    private void addRevenueForTick() {
+        revenue += passengers.size();
     }
 
     private int increasePosToInt() {
@@ -27,7 +73,11 @@ public class Car {
     }
 
     private void alignIncreasingPosVal() {
-        increasingPos = position < destinationStation;
+        increasingPos = getIncreaseNeededToReachDestination(destinationStation);
+    }
+
+    private boolean getIncreaseNeededToReachDestination(int destination) {
+        return position < destination;
     }
 
     private void changePosition(int newPos) {
