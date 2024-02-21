@@ -52,13 +52,16 @@ public class Car {
             if (passengers.get(i).getDestinationStation() == position) {                
                 road.passengerDroppedOff(passengers.get(i));
 
-                passengers.remove(i).exitCar();
+                passengers.get(i).exitCar();
+                passengers.remove(i);
             }
         }
     }
 
     private void attemptToPickUpPassengers() {
-        for (Passenger passenger : road.getPassengers()) {
+        for (int i = 0; i < road.getPassengers().size(); i++) {
+            Passenger passenger = road.getPassengers().get(i);
+            
             if (passenger.getPosition() == position && (getIncreaseNeededToReachDestination(passenger.getDestinationStation()) == increasingPos)) {
                 if (passengers.size() < maxPassengers) {
                     passengers.add(passenger);
