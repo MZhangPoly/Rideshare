@@ -129,7 +129,7 @@ public class Car {
     }
 
     public String toString() {
-        String str = "Car " + uniqueId + ": revenue - " + revenue + " | direction - (" + increasingPosToDirectionString() + ") | passengers: ";
+        String str = "Car " + uniqueId + ": revenue - " + revenue + " | direction: (" + increasingPosToDirectionString() + ") | passengers: ";
 
         for (Passenger passenger : passengers) {
             str += passenger + " | ";
