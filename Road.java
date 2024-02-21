@@ -19,6 +19,9 @@ public class Road {
 
         cars = new ArrayList<Car>();
         passengers = new ArrayList<Passenger>();
+
+        constructCars();
+        constructPassengers();
     }
 
     public void tick() {
