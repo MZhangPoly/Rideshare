@@ -129,7 +129,10 @@ public class Car {
     }
 
     public String toString() {
-        String str = "Car " + uniqueId + ": revenue - " + revenue + " | direction: (" + increasingPosToDirectionString() + ") | destination: " + destinationStation + " | passengers: [";
+        String str = "Car " + uniqueId + ": revenue - " + revenue + " | direction: (" + increasingPosToDirectionString() + ") | destination: " + destinationStation + " | passengers: ";
+
+        if (passengers.size() > 0)
+            str += " (";
 
         for (Passenger passenger : passengers) {
             str += passenger + " | ";
@@ -138,7 +141,7 @@ public class Car {
         if (passengers.size() == 0)
             str += " None | ";
         else
-            str += "]";
+            str += ")";
 
         return str;
     }
