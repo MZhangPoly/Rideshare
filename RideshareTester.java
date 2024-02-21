@@ -1,6 +1,6 @@
 public class RideshareTester {
     public static void main(String[] args) {
-        int ticks = 5;
+        int ticks = 50;
 
         Road road = new Road(2, 3, 5);
 
