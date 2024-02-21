@@ -18,11 +18,19 @@ public class Car {
         roadLength = stationCount;
     }
 
+    public void move() {
+        position += increasePosToInt();
+    }
+
+    private int increasePosToInt() {
+        return increasingPos ? 1 : -1;
+    }
+
     private void alignIncreasingPosVal() {
         increasingPos = position < destinationStation;
     }
 
-    public void changePosition(int newPos) {
+    private void changePosition(int newPos) {
         position = newPos;
 
         if (position == destinationStation)
@@ -30,7 +38,7 @@ public class Car {
 
     }
 
-    public void changeDestinationStation(int newPos) {
+    private void changeDestinationStation(int newPos) {
         position = newPos;
 
         if (position == destinationStation) 
