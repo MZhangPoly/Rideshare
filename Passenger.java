@@ -2,15 +2,45 @@ public class Passenger {
     private int position;
     private int destinationStation;
 
+    private int roadLength;
+
     private Car currentCar;
 
-    public Passenger(int stationCount) {
-        destinationStation = (int) (Math.random() * stationCount);
-        position = (int) (Math.random() * stationCount);
+    public Passenger(int roadLength) {
+        changePosition((int) (Math.random() * roadLength));
+        changeDestinationStation((int) (Math.random() * roadLength));
+
+        this.roadLength = roadLength;
+
+        currentCar = null;
     }
 
     public void enterCar(Car car) {
         currentCar = car;
+    }
+
+    public void exitCar() {
+        currentCar = null;
+    }
+
+    private void changePosition(int newPos) {
+        position = newPos;
+
+        if (position == destinationStation)
+            getNewDestination();
+
+    }
+
+    private void changeDestinationStation(int newPos) {
+        position = newPos;
+
+        if (position == destinationStation) 
+            getNewDestination();
+
+    }
+
+    private void getNewDestination() {
+        destinationStation = (int) (Math.random() * roadLength);
     }
 
     public int getDestinationStation() { return destinationStation; }
