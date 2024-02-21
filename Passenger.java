@@ -56,6 +56,6 @@ public class Passenger {
     public Car getCar() { return currentCar; }
 
     public String toString() {
-        return "Passenger " + uniqueId + ": desired dstination - " + destinationStation;
+        return "Passenger " + uniqueId + ": desired destination - " + destinationStation;
     }
 }
