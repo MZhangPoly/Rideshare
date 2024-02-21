@@ -49,10 +49,10 @@ public class Car {
 
     private void attemptToDropOffPassengers() {
         for (int i = 0; i < passengers.size(); i++) {
-            if (passengers.get(i).getDestinationStation() == position) {
-                passengers.remove(i).exitCar();
-                
+            if (passengers.get(i).getDestinationStation() == position) {                
                 road.passengerDroppedOff(passengers.get(i));
+
+                passengers.remove(i).exitCar();
             }
         }
     }
