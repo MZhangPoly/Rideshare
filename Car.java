@@ -135,6 +135,9 @@ public class Car {
             str += passenger + " | ";
         }
 
+        if (passengers.size() == 0)
+            str += " None | ";
+
         return str;
     }
 }
