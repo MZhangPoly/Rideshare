@@ -49,6 +49,9 @@ public class Car {
 
         position += getMovement();
 
+        for (Passenger passenger : passengers)
+            passenger.moveWithCar(getMovement());
+
         attemptToDropOffPassengers();
         attemptToPickUpPassengers();
     }

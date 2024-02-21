@@ -29,6 +29,10 @@ public class Passenger {
         currentCar = null;
     }
 
+    public void moveWithCar(int movement) {
+        position += movement;
+    }
+
     private void changePosition(int newPos) {
         position = newPos;
 
