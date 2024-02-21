@@ -1,4 +1,7 @@
 public class Passenger {
+    private static int passengersCreated = 0;
+    private int uniqueId;
+
     private int position;
     private int destinationStation;
 
@@ -7,6 +10,9 @@ public class Passenger {
     private Car currentCar;
 
     public Passenger(int roadLength) {
+        uniqueId = passengersCreated;
+        passengersCreated++;
+
         changePosition((int) (Math.random() * roadLength));
         changeDestinationStation((int) (Math.random() * roadLength));
 
@@ -48,4 +54,8 @@ public class Passenger {
     public int getPosition() { return position; }
 
     public Car getCar() { return currentCar; }
+
+    public String toString() {
+        return "Passenger " + uniqueId + ": desired dstination - " + destinationStation;
+    }
 }

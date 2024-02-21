@@ -3,6 +3,9 @@ import java.util.ArrayList;
 public class Car {
     private Road road;
 
+    private static int amountOfCars = 0;
+    private int uniqueId;
+
     private int revenue;
 
     private int roadLength;
@@ -16,6 +19,9 @@ public class Car {
     
     public Car(Road road) {
         this.road = road;
+
+        uniqueId = amountOfCars;
+        amountOfCars++;
 
         revenue = 0;
 
@@ -61,7 +67,7 @@ public class Car {
     private void attemptToPickUpPassengers() {
         for (int i = 0; i < road.getPassengers().size(); i++) {
             Passenger passenger = road.getPassengers().get(i);
-            
+
             if (passenger.getPosition() == position && (getIncreaseNeededToReachDestination(passenger.getDestinationStation()) == increasingPos)) {
                 if (passengers.size() < maxPassengers) {
                     passengers.add(passenger);
@@ -117,4 +123,18 @@ public class Car {
     public int getDestinationStation() { return destinationStation; }
 
     public boolean getIncreasingPos() { return increasingPos; }
+
+    private String increasingPosToDirectionString() {
+        return increasingPos ? "+" : "-";
+    }
+
+    public String toString() {
+        String str = "Car " + uniqueId + ": revenue - " + revenue + " | direction - (" + increasingPosToDirectionString() + ") | passengers: ";
+
+        for (Passenger passenger : passengers) {
+            str += passenger + " | ";
+        }
+
+        return str;
+    }
 }
