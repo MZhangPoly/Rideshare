@@ -100,6 +100,20 @@ public class Road {
         return passengersOnMile;
     }
 
+    public int getCarCount() { return carCount; }
+
+    public int getPassengerCount() { return passengerCount; }
+
+    public int getRevenueOfAllCars() {
+        int totalRevenue = 0;
+
+        for (Car car : cars)
+            totalRevenue += car.getRevenue();
+        
+
+        return totalRevenue;
+    }
+
     public String toString() {
         String str = "";
 
@@ -118,5 +132,10 @@ public class Road {
         }
 
         return str;
+    }
+
+
+    public String getRoadCharacteristics() {
+        return "road with length: " + getLength() + ", cars: " + getCarCount() + ", and passengers: " + getPassengerCount();
     }
 }

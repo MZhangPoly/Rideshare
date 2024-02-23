@@ -28,8 +28,8 @@ public class Car {
         roadLength = road.getLength();
 
         changePosition((int) (Math.random() * roadLength));
-        changeDestinationStation((int) (Math.random() * roadLength));
-        
+        getNewDestination();
+
         alignIncreasingPosVal();
 
         passengers = new ArrayList<Passenger>();
@@ -39,19 +39,23 @@ public class Car {
     }
 
     public void onTick() {
-        addRevenueForTick();
         move();
     }
 
     private void move() {
-        if (position + getMovement() >= roadLength || position + getMovement() < 0) { // zero index
-            increasingPos = !increasingPos; // makes car switch direction if it hits the end of the road
-        } else {
-            position += getMovement(); // must be in else statement or else the car will immediately leave the edge of road position without changing direction there first
-        }
+        // if (position + getMovement() >= roadLength || position + getMovement() < 0) { // zero index
+        //     increasingPos = !increasingPos; // makes car switch direction if it hits the end of the road
+        // }
 
+        position += getMovement(); // must be in else statement or else the car will immediately leave the edge of road position without changing direction there first
+        
         for (Passenger passenger : passengers)
             passenger.moveWithCar(getMovement());
+
+        addRevenueForTick();
+
+        if (position == destinationStation)
+            getNewDestination();
 
         attemptToDropOffPassengers();
         attemptToPickUpPassengers();
@@ -59,11 +63,13 @@ public class Car {
 
     private void attemptToDropOffPassengers() {
         for (int i = 0; i < passengers.size(); i++) {
-            if (passengers.get(i).getDestinationStation() == position) {                
+            if (passengers.get(i).getDestinationStation() == position) {
+                passengers.get(i).exitCar();
+
                 road.passengerDroppedOff(passengers.get(i));
 
-                passengers.get(i).exitCar();
                 passengers.remove(i);
+                i--;
             }
         }
     }
@@ -72,7 +78,7 @@ public class Car {
         for (int i = 0; i < road.getPassengers().size(); i++) {
             Passenger passenger = road.getPassengers().get(i);
 
-            if (passenger.getPosition() == position && (getIncreaseNeededToReachDestination(passenger.getDestinationStation()) == increasingPos)) {
+            if (passenger.getPosition() == position && (canDrivePassenger(passenger.getDestinationStation()))) {
                 if (passengers.size() < maxPassengers) {
                     passengers.add(passenger);
 
@@ -82,6 +88,14 @@ public class Car {
                 } 
             }
         }
+    }
+
+    private boolean canDrivePassenger(int passengerDestination) {
+        return carAndPassengerSameDirection(passengerDestination) && Math.abs((destinationStation - position)) >= Math.abs((passengerDestination - position));
+    }
+
+    private boolean carAndPassengerSameDirection(int passengerDestination) {
+        return increasingPos == getIncreaseNeededToReachDestination(passengerDestination);
     }
 
     private void addRevenueForTick() {
@@ -108,16 +122,22 @@ public class Car {
 
     }
 
-    private void changeDestinationStation(int newPos) {
-        destinationStation = newPos;
+    // private void changeDestinationStation(int newPos) {
+    //     destinationStation = newPos;
 
-        if (position == destinationStation) 
-            getNewDestination();
+    //     if (position == destinationStation) 
+    //         getNewDestination();
 
-    }
+    // }
 
     private void getNewDestination() {
-        destinationStation = (int) (Math.random() * roadLength);
+        int newDestinationStation = (int) (Math.random() * roadLength);
+
+        while (newDestinationStation == destinationStation || newDestinationStation == position)
+            newDestinationStation = (int) (Math.random() * roadLength);
+
+        destinationStation = newDestinationStation;
+        alignIncreasingPosVal();
     }
 
     public int getRevenue() { return revenue; }
@@ -134,6 +154,7 @@ public class Car {
 
     public String toString() {
         String str = "Car " + uniqueId + ": revenue - " + revenue + " | direction: (" + increasingPosToDirectionString() + ") | destination: " + destinationStation + " | passengers: ";
+       // String str = "Car " + uniqueId + " | destination: " + destinationStation + " | passengers: ";
 
         if (passengers.size() > 0)
             str += " {";

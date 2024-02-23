@@ -12,13 +12,13 @@ public class Passenger {
     public Passenger(int roadLength) {
         uniqueId = passengersCreated;
         passengersCreated++;
-
-        changePosition((int) (Math.random() * roadLength));
-        changeDestinationStation((int) (Math.random() * roadLength));
-
+        
         this.roadLength = roadLength;
 
         currentCar = null;
+
+        changePosition((int) (Math.random() * roadLength));
+        getNewDestination();
     }
 
     public void enterCar(Car car) {
@@ -27,6 +27,8 @@ public class Passenger {
 
     public void exitCar() {
         currentCar = null;
+
+        getNewDestination();
     }
 
     public void moveWithCar(int movement) {
@@ -41,16 +43,14 @@ public class Passenger {
 
     }
 
-    private void changeDestinationStation(int newPos) {
-        destinationStation = newPos;
-
-        if (position == destinationStation) 
-            getNewDestination();
-
-    }
-
     private void getNewDestination() {
-        destinationStation = (int) (Math.random() * roadLength);
+        int newDestination = (int) (Math.random() * roadLength);
+
+        while (newDestination == destinationStation) {
+            newDestination = (int) (Math.random() * roadLength);
+        }
+
+        destinationStation = newDestination;
     }
 
     public int getDestinationStation() { return destinationStation; }
