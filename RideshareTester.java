@@ -12,7 +12,7 @@ public class RideshareTester {
         return road.getRevenueOfAllCars();
     }
     public static void main(String[] args) {
-        int iterations = 50;
+        int iterations = 100;
 
         int totalRev1 = 0;
         int totalRev2 = 0;
