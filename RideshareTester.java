@@ -30,7 +30,7 @@ public class RideshareTester {
             totalRev2 += simulateRoad(road2, ticks);
         }
 
-        System.out.println("Average revenue for " + iterations + " iterations for a " + road1.getRoadCharacteristics() + " revenue: " + ((double) totalRev1) / iterations);
-        System.out.println("Average revenue for " + iterations + " iterations for a " + road2.getRoadCharacteristics() + " revenue: " + ((double) totalRev2) / iterations);
+        System.out.println("Average revenue for " + iterations + " iterations for a " + road1.getRoadCharacteristics() + " revenue: " + ((double) totalRev1 / road1.getCarCount()) / iterations);
+        System.out.println("Average revenue for " + iterations + " iterations for a " + road2.getRoadCharacteristics() + " revenue: " + ((double) totalRev2 / road2.getCarCount()) / iterations);
     }
 }
